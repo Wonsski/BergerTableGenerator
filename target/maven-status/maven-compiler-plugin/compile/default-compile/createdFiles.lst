@@ -1,9 +1,12 @@
 pl\polsl\rajda\view\ConsoleUserInterface.class
 pl\polsl\rajda\main\BergerTableGenerator.class
 pl\polsl\rajda\model\Pair.class
+pl\polsl\rajda\gui\Frame$2.class
 pl\polsl\rajda\controller\Controller.class
 pl\polsl\rajda\model\InvalidPlayerAmountException.class
 pl\polsl\rajda\model\Round.class
+pl\polsl\rajda\gui\Frame$1.class
+pl\polsl\rajda\gui\Frame.class
 pl\polsl\rajda\model\GameElement.class
 pl\polsl\rajda\model\Player.class
 pl\polsl\rajda\model\Table.class

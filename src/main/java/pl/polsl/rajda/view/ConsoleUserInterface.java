@@ -1,6 +1,7 @@
 package pl.polsl.rajda.view;
 
 import java.util.Scanner;
+import pl.polsl.rajda.controller.Controller;
 
 /**
  * Class reads input data from the console.

@@ -74,7 +74,7 @@ public class Controller {
      * @param playersAmount the number of players to create
      * @return a list of Player objects
      */
-    private List<Player> createPlayers(int playersAmount) {
+    public List<Player> createPlayers(int playersAmount) {
         List<Player> players = new ArrayList<>();
         boolean customNames = view.askForCustomNames();
 
