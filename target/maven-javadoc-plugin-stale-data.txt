@@ -1,0 +1,52 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+-encoding
+'UTF-8'
+-protected
+-source
+'21'
+-sourcepath
+'C:/Users/radoslawrajda/Desktop/GeneratorTabelBergera/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/radoslawrajda/Desktop/GeneratorTabelBergera/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'GeneratorTabelBergera 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'GeneratorTabelBergera 1.0-SNAPSHOT API'
+pl.polsl.rajda.controller
+pl.polsl.rajda.main
+pl.polsl.rajda.model
+pl.polsl.rajda.view
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\src\main\java = 1729332793442
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\allclasses-index.html = 1729514797284
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\allpackages-index.html = 1729514797289
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\copy.svg = 1729514797507
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\element-list = 1729514796936
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\help-doc.html = 1729514797480
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\index-all.html = 1729514797421
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\index.html = 1729514797231
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\link.svg = 1729514797551
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\member-search-index.js = 1729514797296
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\module-search-index.js = 1729514797292
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\overview-summary.html = 1729514797437
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\overview-tree.html = 1729514797223
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\package-search-index.js = 1729514797293
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\script.js = 1729514797502
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\search-page.js = 1729514797567
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\search.html = 1729514797427
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\search.js = 1729514797551
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\serialized-form.html = 1729514797041
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\stylesheet.css = 1729514797498
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\tag-search-index.js = 1729514797298
+C:\Users\radoslawrajda\Desktop\GeneratorTabelBergera\target\reports\apidocs\type-search-index.js = 1729514797295

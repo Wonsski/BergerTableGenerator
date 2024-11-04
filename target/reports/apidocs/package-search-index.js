@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"pl.polsl.rajda.controller"},{"l":"pl.polsl.rajda.main"},{"l":"pl.polsl.rajda.model"},{"l":"pl.polsl.rajda.view"}];updateSearchResults();
