@@ -6,9 +6,9 @@ package pl.polsl.rajda.model;
  * that will compete against each other in a round.
  * 
  * @author Radosław Rajda
- * @version 1.0
+ * @version 2.0
  */
-public class Pair extends GameElement {
+public class Pair {
     
     /**
      * First player
@@ -55,12 +55,4 @@ public class Pair extends GameElement {
         return "(" + player1.getName() + " vs " + player2.getName() + ")";
     }
     
-    /**
-     * Displays details of the pair
-     */
-    @Override
-    public void displayElementDetails() {
-        System.out.println("Player1 name: "+ player1.getName());
-        System.out.println("Player2 name: "+ player2.getName());
-    }
 }

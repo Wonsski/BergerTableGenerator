@@ -1,14 +1,16 @@
 package pl.polsl.rajda.view;
 
+import java.util.List;
 import java.util.Scanner;
-import pl.polsl.rajda.controller.Controller;
+import pl.polsl.rajda.model.Round;
+import pl.polsl.rajda.model.Table;
 
 /**
  * Class reads input data from the console.
  * It interacts with the user to retrieve game parameters and display results.
  * 
  * Author: Radosław Rajda
- * Version: 1.0
+ * Version: 2.0
  */
 public class ConsoleUserInterface {
     
@@ -65,5 +67,17 @@ public class ConsoleUserInterface {
     public String getPlayerName(int playerNumber) {
         System.out.println("Enter name for player " + playerNumber + ":");
         return scanner.next();
+    }
+    
+    /**
+     * Prints the details of each round in the tournament.
+     * 
+     * @param table the table containing rounds to be displayed
+     */
+    public void printTable(Table table) {
+        List<Round> rounds = table.getRounds();
+        for (int i = 0; i < rounds.size(); i++) {
+            System.out.println("Round " + (i + 1) + ": " + rounds.get(i));
+        }
     }
 }

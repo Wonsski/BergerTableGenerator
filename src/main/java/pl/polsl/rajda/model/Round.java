@@ -8,9 +8,9 @@ import java.util.List;
  * in that round.
  * 
  * @author Radosław Rajda
- * @version 1.0
+ * @version 2.0
  */
-public class Round extends GameElement {
+public class Round {
     
     /**
      * List of pairs in the round
@@ -47,14 +47,4 @@ public class Round extends GameElement {
         return sb.toString();
     }
     
-    /**
-     * Displays details of round
-     */
-    @Override
-    public void displayElementDetails() {
-        System.out.println("Number of pairs " + pairs.size());
-        for (Pair pair : pairs) {
-            System.out.println(pair.toString());
-        }
-    }
 }

@@ -5,7 +5,7 @@ package pl.polsl.rajda.model;
  * This exception is thrown when the number of players is less than 2.
  * 
  * @author Radosław Rajda
- * @version 1.0
+ * @version 2.0
  */
 public class InvalidPlayerAmountException extends Exception {
 

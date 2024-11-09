@@ -1,19 +1,21 @@
 package pl.polsl.rajda.controller;
 
-import pl.polsl.rajda.model.Table;
 import pl.polsl.rajda.view.ConsoleUserInterface;
 import pl.polsl.rajda.model.InvalidPlayerAmountException;
 import pl.polsl.rajda.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import pl.polsl.rajda.model.BergerTableGenerationStrategy;
+import pl.polsl.rajda.model.Table;
+import pl.polsl.rajda.model.TableGenerationStrategy;
 
 /**
  * Class supports user interaction with the application. It handles user input
  * and manages the game process.
  *
  * @author Radosław Rajda 
- * @version 1.0
+ * @version 2.0
  */
 public class Controller {
 
@@ -63,8 +65,9 @@ public class Controller {
         if (players.size() < 2) {
             throw new InvalidPlayerAmountException("The number of players must be greater than 1.");
         }
-        Table table = new Table(players);
-        table.displayElementDetails();
+        TableGenerationStrategy strategy = new BergerTableGenerationStrategy();
+        Table table = new Table(players, strategy);
+        view.printTable(table);
         view.printGamesAmount((players.size() * (players.size() - 1)) / 2);
     }
 

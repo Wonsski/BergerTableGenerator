@@ -5,9 +5,9 @@ package pl.polsl.rajda.model;
  * Each player has a name that identifies them.
  * 
  * @author Radosław Rajda
- * @version 1.0
+ * @version 2.0
  */
-public class Player extends GameElement {
+public class Player {
     
     /**
      * Player name
@@ -31,11 +31,4 @@ public class Player extends GameElement {
         return name;
     }
     
-    /**
-     * Displays details of the player
-     */
-    @Override
-    public void displayElementDetails() {
-        System.out.println("Player name: " + name);
-    }
 }
