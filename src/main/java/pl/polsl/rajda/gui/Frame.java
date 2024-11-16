@@ -209,66 +209,71 @@ public class Frame extends javax.swing.JFrame {
      * @param table the tournament table containing rounds
      */
     private void updateTable(Table table) {
-    List<Round> rounds = table.getRounds();
+        List<Round> rounds = table.getRounds();
 
-    int colCount = rounds.get(0).getPairs().size();
-    int rowCount = rounds.size();
+        int colCount = rounds.get(0).getPairs().size();
+        int rowCount = rounds.size();
 
-    String[] columnNames = new String[colCount];
-    for (int i = 0; i < colCount; i++) {
-        columnNames[i] = "Game " + (i + 1);
-    }
+        List<String> columnNames = java.util.stream.IntStream.rangeClosed(1, colCount)
+            .mapToObj(i -> "Game " + i)
+            .toList();
 
-    Object[][] tableData = new Object[rowCount][colCount];
-    for (int row = 0; row < rowCount; row++) {
-        List<Pair> pairs = rounds.get(row).getPairs();
-        for (int col = 0; col < pairs.size(); col++) {
-            tableData[row][col] = pairs.get(col).toString();
+        List<List<String>> tableData = new ArrayList<>();
+        rounds.forEach(round -> {
+            List<String> row = new ArrayList<>();
+            round.getPairs().forEach(pair -> row.add(pair.player1().name() + " vs " + pair.player2().name()));
+            tableData.add(row);
+        });
+
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames.toArray(), rowCount);
+        for (int row = 0; row < tableData.size(); row++) {
+            for (int col = 0; col < tableData.get(row).size(); col++) {
+                tableModel.setValueAt(tableData.get(row).get(col), row, col);
+            }
         }
+
+        jTable1.setModel(tableModel);
+
+        List<String> rowHeaders = java.util.stream.IntStream.rangeClosed(1, rowCount)
+            .mapToObj(i -> "Round " + i)
+            .toList();
+
+        JList<String> rowHeaderList = new JList<>(rowHeaders.toArray(new String[0]));
+        rowHeaderList.setFixedCellWidth(100);
+        rowHeaderList.setFixedCellHeight(jTable1.getRowHeight());
+        rowHeaderList.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setHorizontalAlignment(JLabel.CENTER);
+                return label;
+            }
+        });
+
+        jScrollPane1.setRowHeaderView(rowHeaderList);
+
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        jTable1.getTableHeader().setDefaultRenderer(headerRenderer);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        int minColumnWidth = 170;
+        java.util.stream.IntStream.range(0, jTable1.getColumnModel().getColumnCount())
+            .forEach(i -> {
+                jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+                jTable1.getColumnModel().getColumn(i).setMinWidth(minColumnWidth);
+                jTable1.getColumnModel().getColumn(i).setPreferredWidth(minColumnWidth);
+            });
+
+        int tableWidth = colCount * minColumnWidth;
+        jTable1.setPreferredScrollableViewportSize(new Dimension(tableWidth, jTable1.getPreferredScrollableViewportSize().height));
+        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     }
 
-    jTable1.setModel(new javax.swing.table.DefaultTableModel(tableData, columnNames));
 
-    String[] rowHeaders = new String[rowCount];
-    for (int i = 0; i < rowCount; i++) {
-        rowHeaders[i] = "Round " + (i + 1);
-    }
-
-    JList<String> rowHeaderList = new JList<>(rowHeaders);
-    rowHeaderList.setFixedCellWidth(100);
-    rowHeaderList.setFixedCellHeight(jTable1.getRowHeight());
-    rowHeaderList.setCellRenderer(new DefaultListCellRenderer() {
-        @Override
-        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            label.setHorizontalAlignment(JLabel.CENTER);
-            return label;
-        }
-    });
-
-    jScrollPane1.setRowHeaderView(rowHeaderList);
-
-    DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-    headerRenderer.setHorizontalAlignment(JLabel.CENTER);
-    jTable1.getTableHeader().setDefaultRenderer(headerRenderer);
-
-    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-    centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-    int minColumnWidth = 170;
-
-    for (int i = 0; i < jTable1.getColumnModel().getColumnCount(); i++) {
-        jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        jTable1.getColumnModel().getColumn(i).setMinWidth(minColumnWidth);
-        jTable1.getColumnModel().getColumn(i).setPreferredWidth(minColumnWidth);
-    }
-
-    int tableWidth = colCount * minColumnWidth;
-    jTable1.setPreferredScrollableViewportSize(new Dimension(tableWidth, jTable1.getPreferredScrollableViewportSize().height));
-    jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-    jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-}
 
     /**
      * Starts the generation of the tournament table.
@@ -287,15 +292,11 @@ public class Frame extends javax.swing.JFrame {
             if (useCustomNames) {
                 for (int i = 1; i <= playersAmount; i++) {
                     String playerName = JOptionPane.showInputDialog(this, "Enter name for player " + i + ":");
-                    if (playerName == null || playerName.trim().isEmpty()) {
-                        playerName = "Player " + i;
-                    }
-                    players.add(new Player(playerName));
+                    players.add(new Player((playerName == null || playerName.trim().isEmpty()) ? "Player " + i : playerName));
                 }
             } else {
-                for (int i = 1; i <= playersAmount; i++) {
-                    players.add(new Player("Player " + i));
-                }
+                java.util.stream.IntStream.rangeClosed(1, playersAmount)
+                    .forEach(i -> players.add(new Player("Player " + i)));
             }
 
             TableGenerationStrategy strategy = new BergerTableGenerationStrategy();
@@ -309,6 +310,8 @@ public class Frame extends javax.swing.JFrame {
             showError(e.getMessage());
         }
     }
+
+
 
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

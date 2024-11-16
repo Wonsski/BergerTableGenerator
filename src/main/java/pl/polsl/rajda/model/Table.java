@@ -1,6 +1,8 @@
 package pl.polsl.rajda.model;
 
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Class holds all game information and manages rounds. Uses a strategy for
@@ -8,6 +10,8 @@ import java.util.List;
  * 
  * @version 2.0
  */
+@Getter
+@EqualsAndHashCode
 public class Table {
 
     /**
@@ -33,14 +37,5 @@ public class Table {
         this.players = players;
         this.generationStrategy = generationStrategy;
         this.rounds = generationStrategy.generateRounds(players);
-    }
-
-    /**
-     * Gets the list of rounds in the tournament.
-     *
-     * @return rounds list
-     */
-    public List<Round> getRounds() {
-        return rounds;
     }
 }

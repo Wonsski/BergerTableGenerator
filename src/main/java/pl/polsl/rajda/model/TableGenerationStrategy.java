@@ -6,7 +6,6 @@ import java.util.List;
  * Interface for generating a tournament table.
  * Implements the Strategy pattern for table generation.
  * 
- * @author Radosław Rajda
  * @version 2.0
  */
 public abstract class TableGenerationStrategy {

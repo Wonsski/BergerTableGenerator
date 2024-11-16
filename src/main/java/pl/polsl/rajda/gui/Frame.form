@@ -190,9 +190,6 @@
             <Property name="text" type="java.lang.String" value="Use custom players names"/>
             <Property name="toolTipText" type="java.lang.String" value="Enable asking for players names"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Enable asking for players names"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
           </Events>
