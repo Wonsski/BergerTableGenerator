@@ -19,7 +19,7 @@ import pl.polsl.rajda.model.*;
    * Class supports user graphical interface
    *
    * @author Radosław Rajda 
-   * @version 2.0
+   * @version 3.0
 */
 public class Frame extends javax.swing.JFrame {
 

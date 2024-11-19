@@ -7,7 +7,7 @@ import java.util.List;
  * Strategy for generating a Berger tournament table.
  * This class generates rounds based on the Berger algorithm.
  * 
- * @version 2.0
+ * @version 3.0
  */
 public class BergerTableGenerationStrategy extends TableGenerationStrategy {
 

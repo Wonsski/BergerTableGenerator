@@ -15,7 +15,7 @@ import pl.polsl.rajda.model.TableGenerationStrategy;
  * and manages the game process.
  *
  * @author Radosław Rajda 
- * @version 2.0
+ * @version 3.0
  */
 public class Controller {
 

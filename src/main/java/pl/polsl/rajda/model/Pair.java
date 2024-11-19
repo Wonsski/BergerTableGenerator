@@ -5,7 +5,7 @@ package pl.polsl.rajda.model;
  * This class is responsible for storing two Player objects
  * that will compete against each other in a round.
  * 
- * @version 2.0
+ * @version 3.0
  */
 public record Pair(Player player1, Player player2) {
 

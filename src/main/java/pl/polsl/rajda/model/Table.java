@@ -8,7 +8,7 @@ import lombok.Getter;
  * Class holds all game information and manages rounds. Uses a strategy for
  * table generation based on the provided players.
  * 
- * @version 2.0
+ * @version 3.0
  */
 @Getter
 @EqualsAndHashCode

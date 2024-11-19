@@ -10,7 +10,7 @@ import pl.polsl.rajda.model.Table;
  * It interacts with the user to retrieve game parameters and display results.
  * 
  * Author: Radosław Rajda
- * Version: 2.0
+ * Version: 3.0
  */
 public class ConsoleUserInterface {
     

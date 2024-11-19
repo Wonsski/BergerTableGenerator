@@ -10,7 +10,7 @@ import lombok.Getter;
  * This class holds a list of pairs of players that will compete
  * in that round.
  * 
- * @version 2.0
+ * @version 3.0
  */
 @AllArgsConstructor
 @Getter
