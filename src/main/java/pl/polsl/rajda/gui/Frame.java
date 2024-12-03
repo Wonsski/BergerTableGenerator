@@ -204,74 +204,98 @@ public class Frame extends javax.swing.JFrame {
     }
 
     /**
-     * Updates the table with tournament rounds.
-     *
-     * @param table the tournament table containing rounds
-     */
-    private void updateTable(Table table) {
-        List<Round> rounds = table.getRounds();
+    * Updates the table with tournament rounds and results.
+    *
+    * @param table the tournament table containing rounds
+    */
+   private void updateTable(Table table) {
+       List<Round> rounds = table.getRounds();
 
-        int colCount = rounds.get(0).getPairs().size();
-        int rowCount = rounds.size();
+       int colCount = rounds.get(0).getPairs().size();
+       int rowCount = rounds.size();
 
-        List<String> columnNames = java.util.stream.IntStream.rangeClosed(1, colCount)
-            .mapToObj(i -> "Game " + i)
-            .toList();
+       // Column names for table
+       List<String> columnNames = java.util.stream.IntStream.rangeClosed(1, colCount)
+           .mapToObj(i -> "Game " + i)
+           .toList();
 
-        List<List<String>> tableData = new ArrayList<>();
-        rounds.forEach(round -> {
-            List<String> row = new ArrayList<>();
-            round.getPairs().forEach(pair -> row.add(pair.player1().name() + " vs " + pair.player2().name()));
-            tableData.add(row);
-        });
+       // Create table data using GameResult
+       List<List<String>> tableData = new ArrayList<>();
+       rounds.forEach(round -> {
+           List<String> row = new ArrayList<>();
+           round.getPairs().forEach(pair -> {
+               GameResult<String> result = new GameResult<>(pair, "TBD");
+               row.add(result.getPair().player1().name() + " vs " + result.getPair().player2().name() + " (" + result.getResult() + ")");
+           });
+           tableData.add(row);
+       });
 
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames.toArray(), rowCount);
-        for (int row = 0; row < tableData.size(); row++) {
-            for (int col = 0; col < tableData.get(row).size(); col++) {
-                tableModel.setValueAt(tableData.get(row).get(col), row, col);
-            }
-        }
+       // Set up table model
+       DefaultTableModel tableModel = new DefaultTableModel(columnNames.toArray(), rowCount);
+       for (int row = 0; row < tableData.size(); row++) {
+           for (int col = 0; col < tableData.get(row).size(); col++) {
+               tableModel.setValueAt(tableData.get(row).get(col), row, col);
+           }
+       }
 
-        jTable1.setModel(tableModel);
+       jTable1.setModel(tableModel);
 
-        List<String> rowHeaders = java.util.stream.IntStream.rangeClosed(1, rowCount)
-            .mapToObj(i -> "Round " + i)
-            .toList();
+       // Row headers
+       List<String> rowHeaders = java.util.stream.IntStream.rangeClosed(1, rowCount)
+           .mapToObj(i -> "Round " + i)
+           .toList();
 
-        JList<String> rowHeaderList = new JList<>(rowHeaders.toArray(new String[0]));
-        rowHeaderList.setFixedCellWidth(100);
-        rowHeaderList.setFixedCellHeight(jTable1.getRowHeight());
-        rowHeaderList.setCellRenderer(new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                label.setHorizontalAlignment(JLabel.CENTER);
-                return label;
-            }
-        });
+       JList<String> rowHeaderList = new JList<>(rowHeaders.toArray(new String[0]));
+       rowHeaderList.setFixedCellWidth(100);
+       rowHeaderList.setFixedCellHeight(jTable1.getRowHeight());
+       rowHeaderList.setCellRenderer(new DefaultListCellRenderer() {
+           @Override
+           public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+               JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+               label.setHorizontalAlignment(JLabel.CENTER);
+               return label;
+           }
+       });
 
-        jScrollPane1.setRowHeaderView(rowHeaderList);
+       jScrollPane1.setRowHeaderView(rowHeaderList);
 
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        jTable1.getTableHeader().setDefaultRenderer(headerRenderer);
+       // Table header and column formatting
+       DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+       headerRenderer.setHorizontalAlignment(JLabel.CENTER);
+       jTable1.getTableHeader().setDefaultRenderer(headerRenderer);
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+       DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+       centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-        int minColumnWidth = 170;
-        java.util.stream.IntStream.range(0, jTable1.getColumnModel().getColumnCount())
-            .forEach(i -> {
-                jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-                jTable1.getColumnModel().getColumn(i).setMinWidth(minColumnWidth);
-                jTable1.getColumnModel().getColumn(i).setPreferredWidth(minColumnWidth);
-            });
+       int minColumnWidth = 170;
+       java.util.stream.IntStream.range(0, jTable1.getColumnModel().getColumnCount())
+           .forEach(i -> {
+               jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+               jTable1.getColumnModel().getColumn(i).setMinWidth(minColumnWidth);
+               jTable1.getColumnModel().getColumn(i).setPreferredWidth(minColumnWidth);
+           });
 
-        int tableWidth = colCount * minColumnWidth;
-        jTable1.setPreferredScrollableViewportSize(new Dimension(tableWidth, jTable1.getPreferredScrollableViewportSize().height));
-        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    }
+       int tableWidth = colCount * minColumnWidth;
+       jTable1.setPreferredScrollableViewportSize(new Dimension(tableWidth, jTable1.getPreferredScrollableViewportSize().height));
+       jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+       jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+   }
+   
+   /**
+    * Updates the result of a specific game.
+    *
+    * @param roundNumber the round number
+    * @param gameNumber the game number in the round
+    * @param result the result to be updated
+    */
+   private void updateGameResult(int roundNumber, int gameNumber, String result) {
+       DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+       String currentCell = (String) model.getValueAt(roundNumber - 1, gameNumber - 1);
+
+       // Update result in GameResult string
+       String updatedCell = currentCell.replace("TBD", result);
+       model.setValueAt(updatedCell, roundNumber - 1, gameNumber - 1);
+   }
 
 
 

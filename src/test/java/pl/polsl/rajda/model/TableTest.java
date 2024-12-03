@@ -1,18 +1,25 @@
 package pl.polsl.rajda.model;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Tests for Table class.
+ * Unit tests for the Table class.
+ * Verifies the behavior of the Table class including round generation.
+ * 
+ * @version 4.0
+ * @author Radosław Rajda
  */
 public class TableTest {
 
+    /**
+     * Test the round generation for Table class with a simple custom strategy.
+     * Ensures rounds are generated based on the strategy provided.
+     */
     @Test
     public void testRoundGeneration() {
-        // Arrange
         Player player1 = new Player("A");
         Player player2 = new Player("B");
         List<Player> players = Arrays.asList(player1, player2);
@@ -22,12 +29,11 @@ public class TableTest {
                 return Arrays.asList(new Round(Arrays.asList(new Pair(player1, player2))));
             }
         };
+
         Table table = new Table(players, strategy);
 
-        // Act
         List<Round> rounds = table.getRounds();
 
-        // Assert
         assertEquals(1, rounds.size(), "Table should generate one round.");
     }
 }
