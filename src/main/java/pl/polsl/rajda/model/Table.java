@@ -38,4 +38,37 @@ public class Table {
         this.generationStrategy = generationStrategy;
         this.rounds = generationStrategy.generateRounds(players);
     }
+    
+    /**
+     * Generates an HTML representation of the table with styling.
+     * 
+     * @return HTML string
+     */
+    public String toHtml() {
+        StringBuilder html = new StringBuilder();
+        html.append("<style>")
+            .append("table { width: 100%; border-collapse: collapse; margin: 20px 0; }")
+            .append("th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }")
+            .append("th { background-color: #f2f2f2; }")
+            .append("</style>");
+        html.append("<table>");
+        html.append("<tr><th>Round</th><th>Matches</th></tr>");
+
+        for (int i = 0; i < rounds.size(); i++) {
+            html.append("<tr>");
+            html.append("<td>Round ").append(i + 1).append("</td>");
+            html.append("<td>");
+            html.append("<table border='0' style='width: 100%;'>");
+            List<Pair> pairs = rounds.get(i).getPairs();
+            for (Pair pair : pairs) {
+                html.append("<tr><td>").append(pair.toString()).append("</td></tr>");
+            }
+            html.append("</table>");
+            html.append("</td>");
+            html.append("</tr>");
+        }
+
+        html.append("</table>");
+        return html.toString();
+    }
 }

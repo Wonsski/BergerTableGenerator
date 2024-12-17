@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Tabeli Bergera</title>
+    <title>Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,6 +23,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
         }
         label, input, button {
             display: block;
@@ -43,20 +44,59 @@
         button:hover {
             background: #0056b3;
         }
+        .link {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .link a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
     </style>
+<script>
+        function toggleCustomNames() {
+            const customNamesDiv = document.getElementById('customNamesDiv');
+            customNamesDiv.style.display = document.getElementById('customNames').checked ? 'block' : 'none';
+        }
+
+        function generatePlayerNameFields() {
+            const playersAmount = document.getElementById('playersAmount').value;
+            const customNamesDiv = document.getElementById('customNamesDiv');
+            customNamesDiv.innerHTML = '';
+
+            for (let i = 1; i <= playersAmount; i++) {
+                const label = document.createElement('label');
+                label.textContent = `Player ${i} Name:`;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = `playerName${i}`;
+                input.placeholder = `Enter name for player ${i}`;
+                customNamesDiv.appendChild(label);
+                customNamesDiv.appendChild(input);
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>Generator Tabeli Bergera</h1>
     <form action="/BergerWeb/generate" method="POST">
         <label for="playersAmount">Liczba graczy:</label>
-        <input type="number" id="playersAmount" name="playersAmount" placeholder="Wprowadź liczbę graczy" min="2" required>
+        <input type="number" id="playersAmount" name="playersAmount" placeholder="Wprowadź liczbę graczy" min="2" required oninput="generatePlayerNameFields()">
 
         <label>
-            <input type="checkbox" id="customNames" name="customNames">
+            <input type="checkbox" id="customNames" name="customNames" onclick="toggleCustomNames()">
             Użyj niestandardowych imion graczy
         </label>
 
+        <div id="customNamesDiv" style="display: none;"></div>
+
         <button type="submit">Wygeneruj tabelę</button>
     </form>
+    <div class="link">
+        <a href="/BergerWeb/history">Zobacz historię</a>
+    </div>
 </body>
 </html>

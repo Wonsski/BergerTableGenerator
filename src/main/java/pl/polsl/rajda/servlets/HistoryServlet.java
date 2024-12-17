@@ -4,29 +4,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import jakarta.servlet.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import pl.polsl.rajda.model.*;
 
 /**
- * Servlet to generate Berger tables.
+ * Servlet to access the history of generated Berger tables.
  * 
  * @version 1.0
  * @author Radosław Rajda
  */
-@WebServlet("/generate")
-public class TableGeneratorServlet extends HttpServlet {
-    /**
-     * Initializes the servlet and sets up the TableModel.
-     * 
-     * @throws ServletException if an initialization error occurs
-     */
-    @Override
-    public void init() throws ServletException {
-        TableModel model = new TableModel();
-        getServletContext().setAttribute("tableModel", model);
-    }
-
+@WebServlet("/history")
+public class HistoryServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      * 
@@ -85,39 +72,24 @@ public class TableGeneratorServlet extends HttpServlet {
             return;
         }
 
-        try {
-            String playersAmountParam = request.getParameter("playersAmount");
-            int playersAmount = Integer.parseInt(playersAmountParam);
-
-            if (playersAmount < 2) {
-                throw new IllegalArgumentException("The number of players must be greater than 1.");
-            }
-
-            List<Player> players = new ArrayList<>();
-            boolean useCustomNames = "on".equals(request.getParameter("customNames"));
-
-            for (int i = 1; i <= playersAmount; i++) {
-                String playerName = request.getParameter("playerName" + i);
-                if (useCustomNames && playerName != null && !playerName.trim().isEmpty()) {
-                    players.add(new Player(playerName));
-                } else {
-                    players.add(new Player("Player " + i));
-                }
-            }
-
-            TableModel model = (TableModel) getServletContext().getAttribute("tableModel");
-            Table table = model.generateTable(players);
-
+        TableModel model = (TableModel) getServletContext().getAttribute("tableModel");
+        if (model == null) {
             out.println("<html><body>");
-            out.println("<h1>Berger Table</h1>");
-            out.println(table.toHtml());
+            out.println("<h1>History of Generated Tables</h1>");
+            out.println("<p>No history available.</p>");
             out.println("</body></html>");
-        } catch (NumberFormatException e) {
-            out.println("Invalid number format. Please enter a valid integer.");
-        } catch (IllegalArgumentException e) {
-            out.println(e.getMessage());
-        } catch (Exception e) {
-            out.println("An unexpected error occurred: " + e.getMessage());
+            return;
         }
+
+        out.println("<html><body>");
+        out.println("<h1>History of Generated Tables</h1>");
+        out.println("<ul>");
+
+        for (Table table : model.getHistory()) {
+            out.println("<li>" + table.toHtml() + "</li>");
+        }
+
+        out.println("</ul>");
+        out.println("</body></html>");
     }
 }
