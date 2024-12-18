@@ -6,6 +6,8 @@ import jakarta.servlet.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import pl.polsl.rajda.entities.BergerTableEntity;
+import pl.polsl.rajda.entities.DALManager;
 import pl.polsl.rajda.model.*;
 
 /**
@@ -24,7 +26,9 @@ public class TableGeneratorServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         TableModel model = new TableModel();
+        DALManager dal = new DALManager();
         getServletContext().setAttribute("tableModel", model);
+        getServletContext().setAttribute("DALManager", dal);
     }
 
     /**
@@ -106,8 +110,11 @@ public class TableGeneratorServlet extends HttpServlet {
             }
 
             TableModel model = (TableModel) getServletContext().getAttribute("tableModel");
+            DALManager dal = (DALManager) getServletContext().getAttribute("DALManager");
             Table table = model.generateTable(players);
-
+            BergerTableEntity entity = new BergerTableEntity();
+            dal.persistObject(entity);
+            
             out.println("<html><body>");
             out.println("<h1>Berger Table</h1>");
             out.println(table.toHtml());
